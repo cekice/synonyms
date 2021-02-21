@@ -1,0 +1,40 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
+    margin: 0 auto;
+    max-width: 80%;
+
+    .button-wrapper {
+        margin-top: 5rem;
+    }
+
+    .search {
+        padding: 5rem 5rem 0 5rem;
+    }
+    
+
+    .result-list {
+        width: 100%;
+        margin-top: 8rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+
+        .result-item {
+            font-weight: normal;
+            font-size: 1.5rem;
+            text-align: center;
+            padding: 1rem 1.8rem;
+            border-radius: 15px 5px 15px 5px;
+            box-shadow: -10px -10px 20px -12px grey, 10px 10px 20px -12px grey;
+        }
+    }
+
+    .result-msg {
+        text-align: center;
+        margin-top: 10rem;
+        font-weight: normal;
+    }
+}

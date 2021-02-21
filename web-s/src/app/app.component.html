@@ -1,0 +1,19 @@
+<app-header></app-header>
+<div class="main-container">
+  <div class="button-wrapper">
+    <button (click)="modal.show()" class="btn primary-btn">Add Synonyms</button>
+  </div>
+  <div class="search">
+    <app-search-input (getValue)="chosenOption($event)"></app-search-input>
+  </div>
+  <div class="result-list" *ngIf="items && !noResult">
+      <div *ngFor="let item of items" class="result-item">
+          {{item}}
+      </div>
+  </div>
+  <div class="result-msg" *ngIf="noResult">
+    Sorry, no results. Try another word.
+  </div>
+</div>
+
+  <app-modal #modal></app-modal>

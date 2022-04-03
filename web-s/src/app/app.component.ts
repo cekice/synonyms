@@ -13,7 +13,8 @@ export class AppComponent implements OnInit {
   errorMessage: any;
   noResult = false;
 
-  constructor(private synonymService: SynonymService) {
+  constructor(private synonymService: SynonymService,
+    private loaderService: LoaderService) {
 
   }
 
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit {
   }
 
   async chosenOption(option: any) {
+    this.loaderService.show();
     this.resetResult();
     try {
       if (option !== undefined) {
@@ -33,6 +35,7 @@ export class AppComponent implements OnInit {
     } catch (error: any) {
       this.errorMessage = error.message;
     }
+    this.loaderService.hide();
   }
 
   resetResult() {

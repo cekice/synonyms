@@ -25,6 +25,7 @@
         width: 100%;
         margin-top: 8rem;
         display: flex;
+        flex-wrap: wrap;
         flex-direction: row;
         justify-content: space-evenly;
 
@@ -33,6 +34,7 @@
             font-size: 1.5rem;
             text-align: center;
             padding: 1rem 1.8rem;
+            margin: 1rem;
             border-radius: 15px 5px 15px 5px;
             box-shadow: -10px -10px 20px -12px grey, 10px 10px 20px -12px grey;
         }

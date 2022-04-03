@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
         this.noResult = true;
       }
     } catch (error: any) {
-      this.errorMessage = error.message;
+      this.errorMessage = error.Message;
     }
     this.loaderService.hide();
   }

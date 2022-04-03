@@ -1,12 +1,33 @@
-<div  class="search-wrapper">
-    <div class="msg-box ml-2"><span [ngClass]="searchT?.errors?.pattern ? 'error-msg' : 'hidden'">Input only letters</span></div>
-    <div class="search-input">
-        <input pattern="^[a-zA-Z\-']+$" #searchT="ngModel" placeholder="Find synonyms..." [(ngModel)]="searchTerm" (input)="findSynonym($event)" (keyup.enter)="chosenOption(searchTerm, false)">
-        <button [disabled]="searchT?.errors?.pattern" (click)="chosenOption(searchTerm, false)" class="secondary-button"><img src="../../../assets/images/magnifier.svg" alt=""></button>
+<div class="search-wrapper">
+  <div class="msg-box ml-2">
+    <span [ngClass]="searchT?.errors?.pattern ? 'error-msg' : 'hidden'"
+      >Input only letters</span
+    >
+  </div>
+  <div class="search-input">
+    <input
+      pattern="^[a-zA-Z\-']+$"
+      #searchT="ngModel"
+      placeholder="Find synonyms..."
+      [(ngModel)]="searchTerm"
+      (input)="findSynonym($event)"
+      (keyup.enter)="chosenOption(searchTerm, false)"
+    />
+    <button
+      [disabled]="searchT?.errors?.pattern"
+      (click)="chosenOption(searchTerm, false)"
+      class="secondary-button"
+    >
+      <img src="../../../assets/icons/magnifier.svg" alt="" />
+    </button>
+  </div>
+  <div class="search-results" *ngIf="options">
+    <div
+      *ngFor="let option of options"
+      (click)="chosenOption(option, true)"
+      class="option"
+    >
+      {{ option.Key }}
     </div>
-    <div class="search-results" *ngIf="options">
-        <div *ngFor="let option of options" (click)="chosenOption(option, true)" class="option" >
-            {{option.Key}}
-        </div>
-    </div>
+  </div>
 </div>

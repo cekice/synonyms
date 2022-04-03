@@ -26,14 +26,13 @@ export class SearchInputComponent implements OnInit {
   @ngDebounce(500)
   async findSynonym(event: any) {
     this.searchTerm = event.target.value;
-    console.log(this.searchTerm)
     if (!this.searchTerm) {
       this.options = [];
       return;
     }
     try {
       this.options = await this.synonymService.findSynonyms(this.searchTerm);
-    } catch (error) {
+    } catch (error: any) {
       this.errorMessage = error.message;
     }
   }

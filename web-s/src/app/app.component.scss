@@ -4,14 +4,20 @@
     justify-content: center;
     width: 70%;
     margin: 0 auto;
-    max-width: 80%;
 
     .button-wrapper {
         margin-top: 5rem;
     }
 
     .search {
-        padding: 5rem 5rem 0 5rem;
+        margin-top: 5rem;
+        padding-left: 5rem;
+    }
+
+    @media(max-width: 600px) {
+        .search {
+            padding: 0;
+        }
     }
     
 
@@ -36,5 +42,11 @@
         text-align: center;
         margin-top: 10rem;
         font-weight: normal;
+    }
+}
+
+@media(max-width: 800px) {
+    .main-container {
+        width: 90%;
     }
 }

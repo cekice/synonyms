@@ -56,16 +56,19 @@
             padding: 2rem;
             overflow-y: auto;
             height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
 
-            .synonyms {
+            .synonym-col {
                 display: flex;
-                flex-direction: row;
-                justify-content: space-evenly;
-                margin: 2rem 0;
+                flex-direction: column;
+                justify-content: flex-start;
             }
 
             input {
-                margin: 0 1rem;
+                font-size: 1rem;
+                margin: 1rem 1rem 0;
                 border: 0;
                 border-bottom: $border;
             }
@@ -75,6 +78,38 @@
                 flex-direction: column;
             }
 
+            .added-synonym-wrapper {
+                display: flex;
+            }
+
+            .col-wrapper {          
+                display: flex;
+                flex-direction: row;
+            }
+
+            .equals {
+                padding-top: 3%;
+            }
+            .btn-add-synonym {
+                cursor: pointer;
+                width: 1.7rem;
+                height: 1.7rem;
+                border-radius: 50%;
+                text-align: center;
+                font-size: 23px;
+            }
+
+            .btn-remove-synonym {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                align-self: center;
+                color: red;
+                cursor: pointer;
+                border-radius: 50%;
+                text-align: center;
+                font-size: 20px;
+            }
         }
         
         .success-msg {
@@ -100,7 +135,34 @@
         }
     }
 
+    
+    @media(max-width: 900px){
+        .modal {
+            width: 90%;
+        }
+    }
+
+    @media(max-width: 600px){
+        .modal {
+            width: 100%;
+            height: 100%;
+        }
+        .equals {
+            display: none;
+        }
+        .synonym-input, .synonym-col{
+            width: 100%;
+        }
+    }
+
     .hr-top {
         border-top: 1px solid #d2d2d2;
+    }
+}
+
+@media(max-width: 600px){
+    .modal-container .modal .content{
+        flex-direction: column;
+        justify-content: flex-start;            
     }
 }

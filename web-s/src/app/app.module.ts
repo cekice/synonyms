@@ -5,9 +5,11 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './Components/header/header.component';
 import { ModalComponent } from './Components/modal/modal.component';
 import { SearchInputComponent } from './Components/search-input/search-input.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SynonymService } from './service/synonym.service';
 import { HttpClientModule } from '@angular/common/http';
+import { SpinnerCircularModule } from 'spinners-angular/spinner-circular';
+import { LoaderComponent } from './Components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -15,11 +17,14 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     ModalComponent,
     SearchInputComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    SpinnerCircularModule 
   ],
   exports: [
     ModalComponent

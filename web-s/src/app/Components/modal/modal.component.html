@@ -1,33 +1,85 @@
 <div [ngClass]="visible ? 'modal-container' : 'hide'">
-    <div class="modal">
-        <div class="header">
-            <div class="title">
-                Add Synonyms
-            </div> 
-            <div (click)="hide()" class="close">
-                <img src="../../../assets/images/close.svg" alt="">
-            </div>
-        </div>
-        <div *ngIf="!added" class="content hr-top">
-                <div class="msg-box ml-1"><div [ngClass]="errorMsg ? 'error-msg' : 'hidden'">First two fields are required</div>
-                <div [ngClass]="wordO?.errors?.pattern || wordT?.errors?.pattern || wordTh?.errors?.pattern || wordF?.errors?.pattern ? 'error-msg' : 'hidden'">Input only letters</div></div>
-                <div  class="synonyms">
-                        <input type="text" pattern="^[a-zA-Z\-']+$" [(ngModel)]="wordOne" #wordO="ngModel" placeholder="Enter here..."> 
-                        <input type="text" pattern="^[a-zA-Z\-']+$" [(ngModel)]="wordTwo" [disabled]="!wordOne" #wordT="ngModel" [placeholder]="wordOne ? 'Enter here...' : ''"> 
-                        <input type="text" pattern="^[a-zA-Z\-']+$" [(ngModel)]="wordThree" [disabled]="!wordTwo" #wordTh="ngModel" [placeholder]="wordTwo ? 'Enter here...' : ''"> 
-                        <input type="text" pattern="^[a-zA-Z\-']+$" [(ngModel)]="wordFour" [disabled]="!wordThree" #wordF="ngModel" [placeholder]="wordThree ? 'Enter here...' : ''">
-                </div>
-        </div>
-        <div *ngIf="added" class="success-msg content hr-top">
-            You succesfully added synonyms! <br><br>
-            Thank you!
-        </div>
-        <div class="error-msg text-center" *ngIf="errorMessage">
-            {{errorMessage}}
-        </div>
-        <div class="footer hr-top">
-            <button (click)="hide()" class="btn secondary-btn">Close</button>
-            <button *ngIf="!added" (click)="addSynonyms()" type="submit" class="btn primary-btn">Add</button>
-        </div>
+  <div class="modal">
+    <div class="header">
+      <div class="title">Add Synonyms</div>
+      <div (click)="hide()" class="close">
+        <img src="../../../assets/icons/close.svg" alt="" />
+      </div>
     </div>
+    <div
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      *ngIf="!added"
+      class="content hr-top"
+    >
+      <div class="synonym-col">
+        <input id="word" type="text" formControlName="word" />
+        <span
+          class="error-msg"
+          *ngIf="
+            form.controls.word.hasError('required') &&
+            form.controls.word.touched
+          "
+          >Field required</span
+        >
+        <span class="error-msg" *ngIf="form.controls.word.hasError('pattern')"
+          >Field invalid</span
+        >
+      </div>
+      <span class="equals">=</span>
+      <div class="col-wrapper">
+        <div class="synonym-col">
+          <div
+            formArrayName="synonyms"
+            *ngFor="let synonym of formArr.controls; let i = index"
+          >
+            <div class="added-synonym-wrapper">
+              <input
+                class="synonym-input"
+                id="synonym-{{ i }}"
+                type="text"
+                [formControlName]="i"
+              />
+              <span
+                *ngIf="i !== 0"
+                (click)="removeSynonym(i)"
+                class="btn-remove-synonym"
+              >
+                <img src="../../../assets/icons/substract.png" alt="" />
+              </span>
+            </div>
+            <span
+              class="error-msg"
+              *ngIf="synonym.hasError('required') && synonym.touched"
+            >
+              Field is required
+            </span>
+            <span class="error-msg" *ngIf="synonym.hasError('pattern')"
+              >Field invalid</span
+            >
+          </div>
+        </div>
+        <div (click)="addSynonym()" class="btn-add-synonym">
+          <img src="../../../assets/icons/add.png" alt="" />
+        </div>
+      </div>
+    </div>
+    <div *ngIf="added" class="success-msg content hr-top">
+      You succesfully added synonyms!
+    </div>
+    <div class="error-msg text-center" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    <div class="footer hr-top">
+      <button (click)="hide()" class="btn secondary-btn">Close</button>
+      <button
+        *ngIf="!added"
+        (click)="onSubmit()"
+        type="submit"
+        class="btn primary-btn"
+      >
+        Add
+      </button>
+    </div>
+  </div>
 </div>

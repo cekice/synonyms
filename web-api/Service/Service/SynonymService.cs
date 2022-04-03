@@ -11,20 +11,17 @@ namespace Service.Service
 {
     public class SynonymService : ISynonymService
     {
-        public static Dictionary<string, int> lookup;
-        public static List<List<string>> addedSynonyms;
+        public static Dictionary<string, int> lookup = new Dictionary<string, int>();
+        public static List<List<string>> addedSynonyms = addedSynonyms = new List<List<string>>();
         public List<Task> tasks = new List<Task>();
-        public static int index;
+        public static int index = 0;
         public async Task AddSynonyms(string[] synonyms)
         {
+            if (synonyms.Distinct().Count() < synonyms.Length)
+                throw new Exception("You have duplicate words!");
 
             var sw = new Stopwatch();
             sw.Start();
-            if (lookup == null && addedSynonyms == null)
-            {
-                lookup = new Dictionary<string, int>();
-                addedSynonyms = new List<List<string>>();
-            }
 
             foreach (var synonym in synonyms)
                 tasks.Add(Task.Run(() => lookup.Add(synonym.ToLower(), index)));
@@ -43,7 +40,11 @@ namespace Service.Service
 
         public async Task<List<KeyValuePair<string, int>>> FindSynonym(string searchTerm)
         {
+            var sw = new Stopwatch();
+            sw.Start();
             var result = await Task.FromResult(lookup.Where(x => x.Key.Contains(searchTerm.ToLower())).ToList());
+            sw.Stop();
+            Console.WriteLine($"Execution Time: {sw.ElapsedMilliseconds} ms");
             if (result == null)
                 return null;
             else

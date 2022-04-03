@@ -7,13 +7,14 @@
     <app-search-input (getValue)="chosenOption($event)"></app-search-input>
   </div>
   <div class="result-list" *ngIf="items && !noResult">
-      <div *ngFor="let item of items" class="result-item">
-          {{item}}
-      </div>
+    <div *ngFor="let item of items" class="result-item">
+      {{ item }}
+    </div>
   </div>
   <div class="result-msg" *ngIf="noResult">
     Sorry, no results. Try another word.
   </div>
 </div>
 
-  <app-modal #modal></app-modal>
+<app-loader></app-loader>
+<app-modal #modal></app-modal>

@@ -45,9 +45,10 @@ textarea:focus, input:focus, button:focus{
   }
 
 .error-msg {
+    margin: 0.3rem 1rem;
     text-align: start;
     color: red;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: normal;
 }
 

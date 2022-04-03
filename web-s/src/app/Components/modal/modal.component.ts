@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Form, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { LoaderService } from 'src/app/service/loader.service';
 import { SynonymService } from 'src/app/service/synonym.service';
 
 @Component({
@@ -10,16 +12,20 @@ export class ModalComponent implements OnInit {
 
   visible = false;
   buttonDisabled = false;
-  wordOne = '';
-  wordTwo = '';
-  wordThree = '';
-  wordFour = '';
   errorMsg = false;
-  synonyms: string[] = [];
   errorMessage: any;
   added = false;
+  form = this.fb.group({
+    word: new FormControl('', [Validators.required, Validators.pattern("^[a-zA-Z\-']+$")]),
+    synonyms: this.fb.array([
+      this.fb.control('', [Validators.required, Validators.pattern("^[a-zA-Z\-']+$")]),
+    ])
+  })
 
-  constructor(private synonymService: SynonymService) { }
+  constructor(private synonymService: SynonymService,
+              private fb: FormBuilder,
+              private loaderService: LoaderService) {
+               }
 
   ngOnInit() {
   }
@@ -29,29 +35,46 @@ export class ModalComponent implements OnInit {
   }
 
   hide() {
-    this.buttonDisabled = this.visible = this.errorMsg = this.added = false;
-    this.wordOne = this.wordTwo = this.wordThree = this.wordFour = '';
-    this.synonyms = [];
+    this.visible = this.errorMsg = this.added = false;
+    this.errorMessage =  '';
+    this.form.reset();
+    this.clearFormArray(this.form.controls.synonyms as FormArray);
   }
 
-  async addSynonyms() {
-    if (!this.wordOne || !this.wordTwo) {
-      this.errorMsg = true;
+  async onSubmit() {
+    this.loaderService.show()
+    if(!this.form.valid) {
+      this.form.markAllAsTouched();
       return;
-    }
-    this.synonyms.push(this.wordOne, this.wordTwo);
-    if (this.wordThree) {
-      this.synonyms.push(this.wordThree);
-      if (this.wordFour) {
-        this.synonyms.push(this.wordFour);
-      }
-    }
+    };
     try {
-     await this.synonymService.addSynonyms(this.synonyms);
-     this.added =  true;
-    } catch (error) {
-      this.errorMessage = error.message;
-    }
+      let synonym = this.form.get('synonyms')?.value;
+      if(!synonym.includes(this.form.controls.word.value))
+          synonym.push(this.form.controls.word.value)
+      await this.synonymService.addSynonyms(synonym);
+      this.added =  true;
+      this.errorMessage = '';
+     } catch (error: any) {
+       this.errorMessage = error.Message;
+     }
+     this.loaderService.hide();
   }
 
+  addSynonym() {
+    (this.form.controls.synonyms as FormArray).push(this.fb.control('',[Validators.required, Validators.pattern("^[a-zA-Z\-']+$")]));
+  }
+
+  removeSynonym(i: number) {
+    (this.form.controls.synonyms as FormArray).removeAt(i);
+  }
+
+  get formArr() {
+    return this.form.get("synonyms") as FormArray;
+  }
+
+  clearFormArray = (formArray: FormArray) => {
+    while (formArray.length !== 1) {
+      formArray.removeAt(1)
+    }
+  }
 }

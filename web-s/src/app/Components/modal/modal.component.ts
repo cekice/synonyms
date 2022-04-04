@@ -50,7 +50,7 @@ export class ModalComponent implements OnInit {
     try {
       let synonym = this.form.get('synonyms')?.value;
       if(!synonym.includes(this.form.controls.word.value))
-          synonym.push(this.form.controls.word.value)
+          synonym.unshift(this.form.controls.word.value)
       await this.synonymService.addSynonyms(synonym);
       this.added =  true;
       this.errorMessage = '';

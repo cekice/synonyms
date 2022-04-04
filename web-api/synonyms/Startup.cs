@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Middleware.GlobalExeptionHandler;
 using Service.Interface;
-using Service.Service;
+using Services.Services;
 
 namespace synonyms
 {
